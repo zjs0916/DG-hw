@@ -1,0 +1,181 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\usepackage{natbib}
+\usepackage{graphicx}
+\usepackage{bbm}
+
+\title{Math 5223 Homework 5}
+\author{Jiasong Zhu}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\section*{Problem 1}
+\begin{proof}
+    $\mathbf{(a)}$ Let $r(\theta,\varphi)=\big(R\sin\varphi\cos\theta,; R\sin\varphi\sin\theta,; R\cos\varphi\big),
+  -\pi<\theta<\pi, 0<\varphi<\pi.$ Note that 
+  $$
+  r_\theta=\frac{\partial r}{\partial \theta}=(-R\sin\phi\sin\theta,R\sin\phi\cos\theta,0),
+  $$
+  $$
+  r_\phi=\frac{\partial r}{\partial \phi}=(R\cos\phi\cos\theta,R\cos\phi\sin\theta,-R\sin\theta).
+  $$
+  Compute, 
+  \begin{align*}
+\langle \mathbf r_\theta,\mathbf r_\theta\rangle
+&=R^2\sin^2\varphi(\sin^2\theta+\cos^2\theta)=R^2\sin^2\varphi,\\
+\langle \mathbf r_\varphi,\mathbf r_\varphi\rangle
+&=R^2(\cos^2\varphi+\sin^2\varphi)=R^2,\\
+\langle \mathbf r_\theta,\mathbf r_\varphi\rangle&=0.
+\end{align*}
+Hence, in the coordinates \((\theta,\varphi)\), the round metric is
+\[
+g_R
+=\langle \mathbf r_\varphi,\mathbf r_\varphi\rangle\, d\varphi^2
++2\langle \mathbf r_\theta,\mathbf r_\varphi\rangle\, d\theta\, d\varphi
++\langle \mathbf r_\theta,\mathbf r_\theta\rangle\, d\theta^2
+=R^2\, d\varphi^2+R^2\sin^2\varphi\, d\theta^2,
+\]
+as desired.
+
+$\mathbf{(b)}$ In the coordinates \((\theta,\varphi)\), the only nonzero components of the metric are
+\[
+g_{\varphi\varphi}=R^2,\qquad g_{\theta\theta}=R^2\sin^2\varphi,
+\]
+so the inverse metric satisfies
+\[
+g^{\varphi\varphi}=\frac{1}{R^2},\qquad g^{\theta\theta}=\frac{1}{R^2\sin^2\varphi}.
+\]
+
+Since \(g_{\theta\theta}\) depends only on \(\varphi\) and \(g_{\varphi\varphi}\) is constant,
+\[
+\partial_\varphi g_{\theta\theta}=2R^2\sin\varphi\cos\varphi,\qquad
+\partial_\theta g_{\theta\theta}=0,\qquad
+\partial_\varphi g_{\varphi\varphi}=0,\qquad
+\partial_\theta g_{\varphi\varphi}=0
+\]
+Hence the only nonzero Christoffel symbols are
+\[
+\Gamma^{\varphi}{}_{\theta\theta}
+=\frac{1}{2}g^{\varphi\varphi}\!\left(0+0-\partial_\varphi g_{\theta\theta}\right)
+=-\frac{1}{2}\cdot\frac{1}{R^2}\cdot 2R^2\sin\varphi\cos\varphi
+=-\sin\varphi\cos\varphi,
+\]
+\[
+\Gamma^{\theta}{}_{\theta\varphi}
+=\Gamma^{\theta}{}_{\varphi\theta}
+=\frac{1}{2}g^{\theta\theta}\,\partial_\varphi g_{\theta\theta}
+=\frac{1}{2}\cdot\frac{1}{R^2\sin^2\varphi}\cdot 2R^2\sin\varphi\cos\varphi
+=\cot\varphi.
+\]
+
+$\mathbf{(c)}$ With the metric \(g_R=R^2\,d\varphi^2+R^2\sin^2\varphi\,d\theta^2\) the only
+nonzero Christoffel symbols are
+\[
+\Gamma^{\varphi}{}_{\theta\theta}=-\sin\varphi\cos\varphi,
+\qquad
+\Gamma^{\theta}{}_{\theta\varphi}=\Gamma^{\theta}{}_{\varphi\theta}=\cot\varphi .
+\]
+Hence the geodesic equations in coordinates \((\theta(t),\varphi(t))\) are
+\begin{align*}
+\theta'' + 2\,\Gamma^{\theta}{}_{\theta\varphi}\,\theta'\varphi' &= 
+\theta'' + 2\cot\varphi\,\theta'\varphi' = 0,\\
+\varphi'' + \Gamma^{\varphi}{}_{\theta\theta}\,(\theta')^{2} &= 
+\varphi'' - \sin\varphi\cos\varphi\,(\theta')^{2}=0.
+\end{align*}
+Consider a meridian: \(\theta(t)\equiv \theta_0\) and
+\(\varphi(t)=t\).
+Then \(\theta'=\theta''=0\), so the first equation holds trivially, and the
+second becomes \(\varphi''=0\), which is satisfied by \(\varphi(t)=at+b\).
+Therefore \((\theta(t),\varphi(t))=(\theta_0,t)\) is a geodesic.
+\end{proof}
+
+\section*{Problem 2}
+\begin{proof}
+    On the unit sphere with spherical coordinates \((\theta,\varphi)\),
+the round metric is \(g=d\varphi^{2}+\sin^{2}\varphi\,d\theta^{2}\).  From Problem 1(b),
+the only nonzero Christoffel symbols are
+\[
+\Gamma^{\varphi}{}_{\theta\theta}=-\sin\varphi\cos\varphi,
+\qquad
+\Gamma^{\theta}{}_{\theta\varphi}=\Gamma^{\theta}{}_{\varphi\theta}=\cot\varphi .
+\]
+Let \(V=\frac{\partial}{\partial\varphi}\).  Using
+\(\nabla_{\partial_i}\partial_j=\Gamma^{k}{}_{ij}\,\partial_k\) for the coordinate frame, we have
+
+\[
+\nabla_{\frac{\partial}{\partial\theta}}V
+=\nabla_{\partial_\theta}\partial_\varphi
+=\Gamma^{\theta}{}_{\theta\varphi}\,\partial_\theta
++\Gamma^{\varphi}{}_{\theta\varphi}\,\partial_\varphi
+=\cot\varphi\,\frac{\partial}{\partial\theta},
+\]
+since \(\Gamma^{\varphi}{}_{\theta\varphi}=0\). Also, 
+
+\[
+\nabla_{\frac{\partial}{\partial\varphi}}V
+=\nabla_{\partial_\varphi}\partial_\varphi
+=\Gamma^{\theta}{}_{\varphi\varphi}\,\partial_\theta
++\Gamma^{\varphi}{}_{\varphi\varphi}\,\partial_\varphi
+=0,
+\]
+because \(\Gamma^{\theta}{}_{\varphi\varphi}=\Gamma^{\varphi}{}_{\varphi\varphi}=0\).
+
+Along the equator \(\varphi=\pi/2\), the tangent is \(\partial_\theta\) and
+\[
+\nabla_{\partial_\theta}V=\cot(\pi/2)\,\partial_\theta=0,
+\]
+so \(V\) is parallel along the equator.  Along any meridian \(\theta=\theta_0\),
+the tangent is \(\partial_\varphi\) and
+\(\nabla_{\partial_\varphi}V=0\), so \(V\) is parallel along each meridian.
+\end{proof}
+\section*{Problem 3}
+\begin{proof}
+Fix \(p\in M\). Using the standard identification
+\(T_{(p,0)}(TM)\cong T_pM\oplus T_pM\) (horizontal \(\oplus\) vertical),
+write a tangent vector as \((X,W)\).
+Consider the map \(G:TM\to M\), \(G(q,V)=\exp_q V\).
+Then
+\[
+dG_{(p,0)}(X,W)=X+W.
+\]
+Indeed, if \(V\equiv 0\) and \(q(s)\) is a curve with \(q(0)=p,\ q'(0)=X\),
+then \(G(q(s),0)=q(s)\), hence \(\frac{d}{ds}\big|_{0}G=X\).
+If \(q\equiv p\) and \(V(s)\) is a curve in \(T_pM\) with \(V(0)=0,\ V'(0)=W\),
+then \(\frac{d}{ds}\big|_{0}\exp_p V(s)=d(\exp_p)_0(W)=W\) since
+\(d(\exp_p)_0=\mathrm{id}_{T_pM}\).
+By linearity the general variation gives \(X+W\).
+
+Thus, for \(F(q,V)=(q,G(q,V))\),
+\[
+dF_{(p,0)}(X,W)=\bigl(X,\ dG_{(p,0)}(X,W)\bigr)=\bigl(X,\ X+W\bigr)
+\in T_pM\oplus T_pM \cong T_{(p,p)}(M\times M).
+\]
+With respect to the decompositions \(T_{(p,0)}(TM)\cong T_pM\oplus T_pM\) and
+\(T_{(p,p)}(M\times M)\cong T_pM\oplus T_pM\), this is the block matrix
+\[
+dF_{(p,0)}=
+\begin{pmatrix}
+\mathrm{id} & 0\\
+\mathrm{id} & \mathrm{id}
+\end{pmatrix},
+\qquad
+\text{whose inverse is }
+\begin{pmatrix}
+\mathrm{id} & 0\\
+-\mathrm{id} & \mathrm{id}
+\end{pmatrix}.
+\]
+Hence \(dF_{(p,0)}\) is an isomorphism.
+
+By the inverse function theorem, there exist neighborhoods
+\(\mathcal{U}_p\subset TM\) of \((p,0)\) and \(\mathcal{V}_p\subset M\times M\) of
+\((p,p)\) such that \(F:\mathcal{U}_p\to\mathcal{V}_p\) is a diffeomorphism.
+Since \(p\) was arbitrary, shrinking and taking the union over \(p\) shows
+that \(F\) is a local diffeomorphism from a neighborhood of the zero section
+in \(TM\) onto a neighborhood of the diagonal \(\Delta\subset M\times M\).
+
+\end{proof}
+\end{document}
