@@ -178,4 +178,78 @@ that \(F\) is a local diffeomorphism from a neighborhood of the zero section
 in \(TM\) onto a neighborhood of the diagonal \(\Delta\subset M\times M\).
 
 \end{proof}
+\section*{Problem 4}
+\begin{proof}
+  $\mathbf{(a)}$ Let $T(s,t)=\partial_t \Gamma(s,t)$. Note that 
+  $$
+  \begin{aligned}
+\left.\frac{d}{ds}\right|_{s=0} L(\Gamma_s)
+&=\left.\frac{d}{ds}\right|_{s=0}\sum_{i=1}^{k-1}\int_{a_i}^{a_{i+1}}|T(s,t)|,dt\\
+&=\sum_{i=1}^{k-1}\int_{a_i}^{a_{i+1}}
+\left.\frac{\langle\nabla_{\partial_s}T,T\rangle}{|T|}\right|_{s=0} dt\\
+&\overset{|T|=1\text{ at }s=0}{=}\sum_{i=1}^{k-1}\int_{a_i}^{a_{i+1}}
+\langle\nabla_{\partial_s}T,\dot\gamma\rangle,dt .
+\end{aligned}
+  $$
+  Since the Levi-Civita connection is torsion free, we have $\nabla_{\partial_s}T=\nabla_{\partial_t}\partial_s\Gamma.$
+  Thus, with $V(t)=\partial_s\Gamma(0,t)$, we have 
+  $$
+  \left.\frac{d}{ds}\right|_{s=0} L(\Gamma_s)=\sum_{i=1}^{k-1}\int_{a_i}^{a_{i+1}}\langle D_t V,\dot\gamma\rangle,dt .
+  $$
+  By integration by part, 
+  $$
+  \int_{a_i}^{a_{i+1}}\langle D_t V,\dot\gamma\rangle,dt=\big[\langle V,\dot\gamma\rangle\big]_{t=a_i^+}^{t=a_{i+1}^-}
+-\int_{a_i}^{a_{i+1}}\langle V, D_t\dot\gamma\rangle,dt .
+  $$
+  Take the sum over all $i$, we have 
+  $$
+  \sum_{i=1}^{k-1}\big[\langle V,\dot\gamma\rangle\big]_{a_i^+}^{a_{i+1}^-}
+= \langle V(b),\dot\gamma(b)\rangle-\langle V(a),\dot\gamma(a)\rangle
+-\sum_{i=2}^{k-1}\langle V(a_i),,\Delta_i\dot\gamma\rangle ,
+$$
+since the interior endpoint contributions telescope and leave the jumps of
+$\dot\gamma$ at the break points $a_i$. Therefore, 
+$$
+\left.\frac{d}{ds}\right|_{s=0} L(\Gamma_s)
+= -\int_{a}^{b}\langle V, D_t\dot\gamma\rangle,dt
++\langle V(b),\dot\gamma(b)\rangle
+-\langle V(a),\dot\gamma(a)\rangle
+-\sum_{i=1}^{k-1}\langle V(a_i),\Delta_i\dot\gamma\rangle.
+$$
+
+$\mathbf{(b)}$ 
+Fix any $w\in T_qN$. Take a smooth curve $\eta:(-\delta,\delta)\to N$ with
+$\eta(0)=q$ and $\eta'(0)=w$. For $|s|$ small, join $p$ to $\eta(s)$ by a
+unit--speed minimizing geodesic $\gamma_s$, and define a smooth variation
+\[
+\Gamma:(-\varepsilon,\varepsilon)\times[0,1]\to M,\qquad
+\Gamma(s,t)=\gamma_s(t).
+\]
+Let $V(t):=\partial_s\Gamma(0,t)$ be its variation field along $\gamma$.
+Then $V(0)=0$ and $V(1)=\eta'(0)=w\in T_qN$.
+
+Since $q$ realizes the distance from $p$ to $N$, the length function
+$L(\Gamma_s)$ has a minimum at $s=0$, hence
+\[
+\left.\frac{d}{ds}\right|_{s=0} L(\Gamma_s)=0.
+\]
+Applying the first variation formula from part (a),
+\[
+\left.\frac{d}{ds}\right|_{s=0}L(\Gamma_s)
+= -\int_{0}^{1}\!\langle V, D_t\dot\gamma\rangle\,dt
+   +\langle V(1),\dot\gamma(1)\rangle
+   -\langle V(0),\dot\gamma(0)\rangle .
+\]
+Because $\gamma$ is a geodesic, $D_t\dot\gamma=0$, and $V(0)=0$, we obtain
+\[
+0=\langle V(1),\dot\gamma(1)\rangle=\langle w,\dot\gamma(1)\rangle .
+\]
+This holds for every $w\in T_qN$, so $\dot\gamma(1)\perp T_qN$. Therefore any
+minimizing geodesic from $p$ to a nearest point $q\in N$ meets $N$
+orthogonally.
+\end{proof}
+\section*{Problem 5}
+\begin{proof}
+  
+\end{proof}
 \end{document}
