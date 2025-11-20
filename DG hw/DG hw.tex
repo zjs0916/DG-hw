@@ -1,252 +1,809 @@
-\documentclass[12pt]{article}
-\usepackage{amsmath, amssymb, amsthm}
-\usepackage{geometry}
-\usepackage{natbib}
-\usepackage{graphicx}
-\usepackage{bbm}
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{enumitem}
+\usepackage{hyperref}
 
-\title{Math 5223 Homework 5}
+\newtheorem{claim}{Claim}
+\newtheorem{lemma}{Lemma}
+\newtheorem{prop}{Proposition}
+\newtheorem{thm}{Theorem}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\newcommand{\ip}[2]{\left\langle #1,\,#2\right\rangle}
+\newcommand{\norm}[1]{\left\lVert #1\right\rVert}
+\newcommand{\Exp}{\mathrm{exp}}
+\newcommand{\expp}{\mathrm{exp}_p}
+\newcommand{\expy}{\mathrm{exp}_y}
+\newcommand{\expphi}{\mathrm{exp}_{\phi(p)}}
+\newcommand{\dist}{d_g}
+\newcommand{\distt}{d_{\tilde g}}
+\newcommand{\R}{\mathbb{R}}
+
+\title{Homework 8 \vspace{-0.35em}}
 \author{Jiasong Zhu}
 \date{\today}
 
+
 \begin{document}
-
 \maketitle
+
 \section*{Problem 1}
-\begin{proof}
-    $\mathbf{(a)}$ Let $r(\theta,\varphi)=\big(R\sin\varphi\cos\theta,; R\sin\varphi\sin\theta,; R\cos\varphi\big),
-  -\pi<\theta<\pi, 0<\varphi<\pi.$ Note that 
-  $$
-  r_\theta=\frac{\partial r}{\partial \theta}=(-R\sin\phi\sin\theta,R\sin\phi\cos\theta,0),
-  $$
-  $$
-  r_\phi=\frac{\partial r}{\partial \phi}=(R\cos\phi\cos\theta,R\cos\phi\sin\theta,-R\sin\theta).
-  $$
-  Compute, 
-  \begin{align*}
-\langle \mathbf r_\theta,\mathbf r_\theta\rangle
-&=R^2\sin^2\varphi(\sin^2\theta+\cos^2\theta)=R^2\sin^2\varphi,\\
-\langle \mathbf r_\varphi,\mathbf r_\varphi\rangle
-&=R^2(\cos^2\varphi+\sin^2\varphi)=R^2,\\
-\langle \mathbf r_\theta,\mathbf r_\varphi\rangle&=0.
-\end{align*}
-Hence, in the coordinates \((\theta,\varphi)\), the round metric is
+\begin{proof}[Solution]
+    \textbf{(i)} 
+Use coordinates $u=(u^1,\dots,u^n)$ on $U$ and the parametrization
 \[
-g_R
-=\langle \mathbf r_\varphi,\mathbf r_\varphi\rangle\, d\varphi^2
-+2\langle \mathbf r_\theta,\mathbf r_\varphi\rangle\, d\theta\, d\varphi
-+\langle \mathbf r_\theta,\mathbf r_\theta\rangle\, d\theta^2
-=R^2\, d\varphi^2+R^2\sin^2\varphi\, d\theta^2,
+X(u) = (u^1,\dots,u^n,f(u)).
 \]
-as desired.
-
-$\mathbf{(b)}$ In the coordinates \((\theta,\varphi)\), the only nonzero components of the metric are
+Then the coordinate tangent vectors are
 \[
-g_{\varphi\varphi}=R^2,\qquad g_{\theta\theta}=R^2\sin^2\varphi,
-\]
-so the inverse metric satisfies
-\[
-g^{\varphi\varphi}=\frac{1}{R^2},\qquad g^{\theta\theta}=\frac{1}{R^2\sin^2\varphi}.
+X_i := \frac{\partial X}{\partial u^i}
+     = e_i + f_i e_{n+1}, 
+\qquad 
+f_i := \frac{\partial f}{\partial u^i}.
 \]
 
-Since \(g_{\theta\theta}\) depends only on \(\varphi\) and \(g_{\varphi\varphi}\) is constant,
+The induced metric is
 \[
-\partial_\varphi g_{\theta\theta}=2R^2\sin\varphi\cos\varphi,\qquad
-\partial_\theta g_{\theta\theta}=0,\qquad
-\partial_\varphi g_{\varphi\varphi}=0,\qquad
-\partial_\theta g_{\varphi\varphi}=0
-\]
-Hence the only nonzero Christoffel symbols are
-\[
-\Gamma^{\varphi}{}_{\theta\theta}
-=\frac{1}{2}g^{\varphi\varphi}\!\left(0+0-\partial_\varphi g_{\theta\theta}\right)
-=-\frac{1}{2}\cdot\frac{1}{R^2}\cdot 2R^2\sin\varphi\cos\varphi
-=-\sin\varphi\cos\varphi,
-\]
-\[
-\Gamma^{\theta}{}_{\theta\varphi}
-=\Gamma^{\theta}{}_{\varphi\theta}
-=\frac{1}{2}g^{\theta\theta}\,\partial_\varphi g_{\theta\theta}
-=\frac{1}{2}\cdot\frac{1}{R^2\sin^2\varphi}\cdot 2R^2\sin\varphi\cos\varphi
-=\cot\varphi.
+g_{ij} = \langle X_i,X_j\rangle
+       = \delta_{ij} + f_i f_j.
 \]
 
-$\mathbf{(c)}$ With the metric \(g_R=R^2\,d\varphi^2+R^2\sin^2\varphi\,d\theta^2\) the only
-nonzero Christoffel symbols are
+A normal vector is $(-f_1,\dots,-f_n,1)$, whose length is
 \[
-\Gamma^{\varphi}{}_{\theta\theta}=-\sin\varphi\cos\varphi,
+W := \sqrt{1+\sum_{k=1}^n f_k^2}.
+\]
+So the upward unit normal is
+\[
+N = \frac{1}{W}(-f_1,\dots,-f_n,1).
+\]
+
+The second fundamental form is, by Lee, Prop.~8.23
+\[
+h(X_i,X_j)
+ = \biggl\langle \frac{\partial^2 X}{\partial u^i\partial u^j}, N\biggr\rangle.
+\]
+We have
+\[
+\frac{\partial^2 X}{\partial u^i\partial u^j}
+ = f_{ij} e_{n+1},
+\qquad 
+f_{ij} := \frac{\partial^2 f}{\partial u^i\partial u^j},
+\]
+so
+\[
+h_{ij} := h(X_i,X_j)
+ = \left\langle f_{ij} e_{n+1}, N\right\rangle
+ = f_{ij} N_{n+1}
+ = \frac{f_{ij}}{W}.
+\]
+
+By def of the shape operator $s$,
+\[
+\langle sX_i, X_j\rangle = h(X_i,X_j),
+\]
+so if $s(X_j) = s^k{}_j X_k$, then
+\[
+h_{ij} = g_{ik} s^k{}_j.
+\]
+Thus, the components of the shape operator in graph coordinates are
+\[
+s^k{}_j = g^{ki} h_{ij}
+        = \frac{1}{W}\,g^{ki} f_{ij},
+\]
+where $(g^{ij})$ is the inverse matrix of $(g_{ij})=(\delta_{ij}+f_i f_j)$.
+
+\textbf{(ii)} Now let
+\[
+f(x) = |x|^2 = \sum_{i=1}^n (x^i)^2.
+\]
+Then
+\[
+f_i = \frac{\partial f}{\partial x^i} = 2x^i, 
 \qquad
-\Gamma^{\theta}{}_{\theta\varphi}=\Gamma^{\theta}{}_{\varphi\theta}=\cot\varphi .
+f_{ij} = \frac{\partial^2 f}{\partial x^i\partial x^j} = 2\delta_{ij}.
 \]
-Hence the geodesic equations in coordinates \((\theta(t),\varphi(t))\) are
-\begin{align*}
-\theta'' + 2\,\Gamma^{\theta}{}_{\theta\varphi}\,\theta'\varphi' &= 
-\theta'' + 2\cot\varphi\,\theta'\varphi' = 0,\\
-\varphi'' + \Gamma^{\varphi}{}_{\theta\theta}\,(\theta')^{2} &= 
-\varphi'' - \sin\varphi\cos\varphi\,(\theta')^{2}=0.
-\end{align*}
-Consider a meridian: \(\theta(t)\equiv \theta_0\) and
-\(\varphi(t)=t\).
-Then \(\theta'=\theta''=0\), so the first equation holds trivially, and the
-second becomes \(\varphi''=0\), which is satisfied by \(\varphi(t)=at+b\).
-Therefore \((\theta(t),\varphi(t))=(\theta_0,t)\) is a geodesic.
+Hence
+\[
+|\nabla f|^2 = \sum_i f_i^2 = 4|x|^2 = 4r^2,\quad r:=|x|,
+\qquad
+W = \sqrt{1+4r^2}.
+\]
+
+From (i),
+\[
+h_{ij} = \frac{f_{ij}}{W} = \frac{2}{W}\,\delta_{ij}.
+\]
+
+The metric in these coordinates is
+\[
+g_{ij} = \delta_{ij} + f_i f_j = \delta_{ij} + 4x^i x^j,
+\]
+which is of the matrix
+\[
+G = I + 4x x^T.
+\]
+
+To find principal curvatures, we should find the eigenvalues of $s$, which is of the matrix
+\[
+S = (s^i{}_j) = G^{-1} H, \quad H=(h_{ij})=\frac{2}{W}I.
+\]
+So $S = \dfrac{2}{W} G^{-1}$, and its eigenvalues are $\dfrac{2}{W}$ times the eigenvalues of $G^{-1}$.
+
+Choose an orthonormal basis in $\mathbb{R}^n$ so that
+\[
+e_1 = \frac{x}{r},\qquad e_2,\dots,e_n \perp x.
+\]
+Then
+\[
+G e_1 = (1+4r^2)e_1,\qquad
+G e_\alpha = e_\alpha \quad (\alpha=2,\dots,n).
+\]
+So the eigenvalues of $G$ are $1+4r^2$ and $1$.  
+Thus the eigenvalues of $G^{-1}$ are
+\[
+\frac{1}{1+4r^2},\qquad 1.
+\]
+
+Therefore the principal curvatures at a point with $|x|=r>0$ are
+\[
+\kappa_{\mathrm{rad}}(r) 
+ = \frac{2}{W}\cdot\frac{1}{1+4r^2}
+ = \frac{2}{(1+4r^2)^{3/2}},
+\]
+in the direction of $\nabla f$, and
+\[
+\kappa_{\mathrm{tan}}(r) 
+ = \frac{2}{W} 
+ = \frac{2}{\sqrt{1+4r^2}}
+\]
+in each of the $n-1$ directions orthogonal to $\nabla f$.
+
+At the vertex $x=0$, we have $r=0$, so $G(0)=I$, $h_{ij}(0)=2\delta_{ij}$, hence
+\[
+S(0)=2I,
+\]
+and all principal curvatures at $x=0$ are
+\[
+\kappa_1(0)=\cdots=\kappa_n(0)=2.
+\]
 \end{proof}
 
 \section*{Problem 2}
 \begin{proof}
-    On the unit sphere with spherical coordinates \((\theta,\varphi)\),
-the round metric is \(g=d\varphi^{2}+\sin^{2}\varphi\,d\theta^{2}\).  From Problem 1(b),
-the only nonzero Christoffel symbols are
+\textbf{(i)} Compute first derivatives:
 \[
-\Gamma^{\varphi}{}_{\theta\theta}=-\sin\varphi\cos\varphi,
-\qquad
-\Gamma^{\theta}{}_{\theta\varphi}=\Gamma^{\theta}{}_{\varphi\theta}=\cot\varphi .
+X_t = (a'\cos\theta,\; a'\sin\theta,\; b'),\qquad
+X_\theta = (-a\sin\theta,\; a\cos\theta,\; 0).
 \]
-Let \(V=\frac{\partial}{\partial\varphi}\).  Using
-\(\nabla_{\partial_i}\partial_j=\Gamma^{k}{}_{ij}\,\partial_k\) for the coordinate frame, we have
 
 \[
-\nabla_{\frac{\partial}{\partial\theta}}V
-=\nabla_{\partial_\theta}\partial_\varphi
-=\Gamma^{\theta}{}_{\theta\varphi}\,\partial_\theta
-+\Gamma^{\varphi}{}_{\theta\varphi}\,\partial_\varphi
-=\cot\varphi\,\frac{\partial}{\partial\theta},
+E = \langle X_t,X_t\rangle = (a')^2 + (b')^2 = 1,
 \]
-since \(\Gamma^{\varphi}{}_{\theta\varphi}=0\). Also, 
-
 \[
-\nabla_{\frac{\partial}{\partial\varphi}}V
-=\nabla_{\partial_\varphi}\partial_\varphi
-=\Gamma^{\theta}{}_{\varphi\varphi}\,\partial_\theta
-+\Gamma^{\varphi}{}_{\varphi\varphi}\,\partial_\varphi
-=0,
+F = \langle X_t,X_\theta\rangle = 0,
 \]
-because \(\Gamma^{\theta}{}_{\varphi\varphi}=\Gamma^{\varphi}{}_{\varphi\varphi}=0\).
-
-Along the equator \(\varphi=\pi/2\), the tangent is \(\partial_\theta\) and
 \[
-\nabla_{\partial_\theta}V=\cot(\pi/2)\,\partial_\theta=0,
+G = \langle X_\theta,X_\theta\rangle = a^2.
 \]
-so \(V\) is parallel along the equator.  Along any meridian \(\theta=\theta_0\),
-the tangent is \(\partial_\varphi\) and
-\(\nabla_{\partial_\varphi}V=0\), so \(V\) is parallel along each meridian.
-\end{proof}
-\section*{Problem 3}
-\begin{proof}
-Fix \(p\in M\). Using the standard identification
-\(T_{(p,0)}(TM)\cong T_pM\oplus T_pM\) (horizontal \(\oplus\) vertical),
-write a tangent vector as \((X,W)\).
-Consider the map \(G:TM\to M\), \(G(q,V)=\exp_q V\).
+So in the basis $\{X_t,X_\theta\}$,
+\[
+g = \begin{pmatrix}1 & 0\\[2pt] 0 & a^2\end{pmatrix},
+\]
+and the coordinate lines $t=\text{const}$ (meridians) and $\theta=\text{const}$ (parallels) are orthogonal.
+
+Compute
+\[
+X_t \times X_\theta = (-ab'\cos\theta,\; -ab'\sin\theta,\; aa'),
+\]
+whose length is $|X_t\times X_\theta| = a$. Thus a unit normal is
+\[
+N = \frac{1}{a}(X_t\times X_\theta)
+  = (-b'\cos\theta,\; -b'\sin\theta,\; a').
+\]
+Second derivatives:
+\[
+X_{tt} = (a''\cos\theta,\; a''\sin\theta,\; b''),\qquad
+X_{t\theta} = (-a'\sin\theta,\; a'\cos\theta,\; 0),
+\]
+\[
+X_{\theta\theta} = (-a\cos\theta,\; -a\sin\theta,\; 0).
+\]
 Then
 \[
-dG_{(p,0)}(X,W)=X+W.
+e := h(X_t,X_t) = \langle X_{tt},N\rangle
+= -a''b' + a'b'',
 \]
-Indeed, if \(V\equiv 0\) and \(q(s)\) is a curve with \(q(0)=p,\ q'(0)=X\),
-then \(G(q(s),0)=q(s)\), hence \(\frac{d}{ds}\big|_{0}G=X\).
-If \(q\equiv p\) and \(V(s)\) is a curve in \(T_pM\) with \(V(0)=0,\ V'(0)=W\),
-then \(\frac{d}{ds}\big|_{0}\exp_p V(s)=d(\exp_p)_0(W)=W\) since
-\(d(\exp_p)_0=\mathrm{id}_{T_pM}\).
-By linearity the general variation gives \(X+W\).
+\[
+f := h(X_t,X_\theta) = \langle X_{t\theta},N\rangle = 0,
+\]
+\[
+g := h(X_\theta,X_\theta) = \langle X_{\theta\theta},N\rangle = a b'.
+\]
 
-Thus, for \(F(q,V)=(q,G(q,V))\),
+So, the matrices of the first and second fundamental forms in $\{X_t,X_\theta\}$ are
 \[
-dF_{(p,0)}(X,W)=\bigl(X,\ dG_{(p,0)}(X,W)\bigr)=\bigl(X,\ X+W\bigr)
-\in T_pM\oplus T_pM \cong T_{(p,p)}(M\times M).
-\]
-With respect to the decompositions \(T_{(p,0)}(TM)\cong T_pM\oplus T_pM\) and
-\(T_{(p,p)}(M\times M)\cong T_pM\oplus T_pM\), this is the block matrix
-\[
-dF_{(p,0)}=
-\begin{pmatrix}
-\mathrm{id} & 0\\
-\mathrm{id} & \mathrm{id}
-\end{pmatrix},
+\text{I} = \begin{pmatrix}1 & 0\\ 0 & a^2\end{pmatrix},
 \qquad
-\text{whose inverse is }
-\begin{pmatrix}
-\mathrm{id} & 0\\
--\mathrm{id} & \mathrm{id}
-\end{pmatrix}.
+\text{II} = \begin{pmatrix}-a''b'+a'b'' & 0\\ 0 & a b'\end{pmatrix}.
 \]
-Hence \(dF_{(p,0)}\) is an isomorphism.
+The shape operator $S$ satisfies $\text{II}(v,w) = \langle Sv,w\rangle$.
+In matrix form, $S = \text{I}^{-1}\text{II}$, so
+\[
+S = \begin{pmatrix}1 & 0\\ 0 & a^{-2}\end{pmatrix}
+    \begin{pmatrix}-a''b'+a'b'' & 0\\ 0 & a b'\end{pmatrix}
+  = \begin{pmatrix}
+      -a''b' + a'b'' & 0\\[3pt]
+      0 & \dfrac{b'}{a}
+    \end{pmatrix}.
+\]
+Thus,
+\[
+S(X_t) = k_1 X_t,\quad k_1(t) = -a''(t)b'(t) + a'(t)b''(t),
+\]
+\[
+S(X_\theta) = k_2 X_\theta,\quad k_2(t) = \frac{b'(t)}{a(t)}.
+\]
+So, $X_t$ and $X_\theta$ are eigenvectors of $S$. Therefore, the direction tangent to the meridian is a principal direction;
+the direction tangent to the latitude circle is a principal direction.
 
-By the inverse function theorem, there exist neighborhoods
-\(\mathcal{U}_p\subset TM\) of \((p,0)\) and \(\mathcal{V}_p\subset M\times M\) of
-\((p,p)\) such that \(F:\mathcal{U}_p\to\mathcal{V}_p\) is a diffeomorphism.
-Since \(p\) was arbitrary, shrinking and taking the union over \(p\) shows
-that \(F\) is a local diffeomorphism from a neighborhood of the zero section
-in \(TM\) onto a neighborhood of the diagonal \(\Delta\subset M\times M\).
+\textbf{(ii)} For a surface in $\mathbb{R}^3$, the Gaussian curvature is
+\[
+K = \det S = k_1k_2.
+\]
+From above,
+\[
+k_1k_2
+= \bigl(-a''b' + a'b''\bigr)\cdot \frac{b'}{a}
+= \frac{b'}{a}\,\bigl(a'b'' - b'a''\bigr).
+\]
+Now use the unit-speed condition, we get
+\[
+(a')^2 + (b')^2 = 1.
+\]
+Differentiate it, we have
+\[
+2a'a'' + 2b'b'' = 0
+\;\Longrightarrow\;
+a'a'' + b'b'' = 0
+\;\Longrightarrow\;
+b'b'' = -a'a''.
+\]
+Then
+\[
+(a'b'' - b'a'')\,b'
+= a'b''b' - b'^2 a''
+= a'(-a'a'') - b'^2 a''
+= -a'^2 a'' - b'^2 a''
+= -(a'^2 + b'^2)a''
+= -a''.
+\]
+So
+\[
+K = k_1k_2
+  = \frac{(a'b'' - b'a'')b'}{a}
+  = \frac{-a''}{a}.
+\]
+Thus, the Gaussian curvature at $X(t,\theta)$ is
+\[
+K(t,\theta) = -\dfrac{a''(t)}{a(t)}.
+\]
 
 \end{proof}
+
+\section*{Problem 3}
+\begin{proof}
+\textbf{(i)} Let a unit–speed curve likes in problem 2 such that 
+\[
+\gamma(t) = (a(t),b(t)),\qquad (a')^2+(b')^2=1,\ a(t)>0,
+\]
+revolved around the $z$–axis gives a surface of revolution
+\[
+X(t,\theta) = (a(t)\cos\theta,\;a(t)\sin\theta,\;b(t)).
+\]
+From Problem~2 we know
+\[
+k_1(t) = -\frac{a''(t)}{b'(t)},\qquad
+k_2(t) = \frac{b'(t)}{a(t)},\qquad
+K(t,\theta) = k_1(t)k_2(t) = -\frac{a''(t)}{a(t)}.
+\]
+To get $K\equiv1$, we need
+\[
+-\frac{a''(t)}{a(t)} = 1 \quad\Longleftrightarrow\quad a''(t)+a(t)=0.
+\]
+For example, let 
+\[
+a(t)=2\cos t,
+\]
+and restrict to the interval $I=(-\pi/6,\pi/6)$ so that $a(t)>0$.
+Define $b$ so that $\gamma$ is unit speed as
+\[
+(a')^2 + (b')^2 =1
+\ \Longrightarrow\
+4\sin^2 t + (b')^2 = 1
+\ \Longrightarrow\
+b'(t) = \sqrt{1-4\sin^2 t},
+\]
+which is smooth and positive on $I$. Let
+\[
+b(t) = \int_0^t \sqrt{1-4\sin^2 s}\,ds.
+\]
+Then $\gamma(t)=(a(t),b(t))$ is unit speed, $a>0$, and the corresponding surface
+$S$ is a surface of revolution.
+For this $a$ we have $a''(t)=-2\cos t = -a(t)$, so
+\[
+K(t,\theta) = -\frac{a''(t)}{a(t)} = 1
+\]
+for all $(t,\theta)\in I\times(0,2\pi)$.
+Now look at one principal curvature
+\[
+k_2(t) = \frac{b'(t)}{a(t)}
+            = \frac{\sqrt{1-4\sin^2 t}}{2\cos t}.
+\]
+At $t=0$ we get
+\[
+k_2(0) = \frac{1}{2}.
+\]
+As $t\to\pi/6$, we have $\sin^2 t\to 1/4$, so $b'(t)\to0$ while
+$\cos(\pi/6)=\sqrt{3}/2\neq0$, hence
+\[
+\lim_{t\to\pi/6}k_2(t)=0.
+\]
+Thus, $k_2$ is not constant, so the principal curvatures of $S$ are not
+constant, even though $K\equiv 1$. 
+
+\textbf{(ii)} For $w>0$, consider
+\[
+\gamma(t) = (a(t),b(t)) = \bigl(w\cosh(t/w),\,t\bigr),\qquad t\in\mathbb{R},
+\]
+and revolve it around the $z$–axis
+\[
+X(t,\theta) = \bigl(a(t)\cos\theta,\;a(t)\sin\theta,\;b(t)\bigr).
+\]
+Here, $a(t)=w\cosh(t/w)$, $b(t)=t$, so
+\[
+a'(t)=\sinh(t/w),\qquad a''(t)=\frac{1}{w}\cosh(t/w),\qquad
+b'(t)=1,\quad b''(t)=0.
+\]
+Computing first derivatives
+\[
+X_t = (a'\cos\theta,\;a'\sin\theta,\;b'),\quad
+X_\theta = (-a\sin\theta,\;a\cos\theta,\;0).
+\]
+So, the first fundamental form is 
+\[
+E = \langle X_t,X_t\rangle = a'^2 + b'^2
+  = \sinh^2(t/w)+1 = \cosh^2(t/w),
+\]
+\[
+F = \langle X_t,X_\theta\rangle = 0,\qquad
+G = \langle X_\theta,X_\theta\rangle = a^2 = w^2\cosh^2(t/w).
+\]
+Then we have
+\[
+X_t\times X_\theta = (-ab'\cos\theta,\; -ab'\sin\theta,\; aa')
+ =(-a\cos\theta,\;-a\sin\theta,\;aa'),
+\]
+so
+\[
+|X_t\times X_\theta| = a\sqrt{E},
+\]
+and a unit normal is
+\[
+N = \frac{1}{a\sqrt{E}}(X_t\times X_\theta)
+  = \frac{1}{\sqrt{E}}(-b'\cos\theta,\; -b'\sin\theta,\;a')
+  = \frac{1}{\cosh(t/w)}(-\cos\theta,\; -\sin\theta,\;\sinh(t/w)).
+\]
+Computing second derivatives
+\[
+X_{tt} = (a''\cos\theta,\;a''\sin\theta,\;b''),\quad
+X_{t\theta} = (-a'\sin\theta,\;a'\cos\theta,\;0),\quad
+X_{\theta\theta} = (-a\cos\theta,\;-a\sin\theta,\;0).
+\]
+Then the second fundamental form are
+\[
+e = \langle X_{tt},N\rangle
+  = \frac{-a''b' + a'b''}{\sqrt{E}}
+  = \frac{-a''}{\sqrt{E}},
+\]
+\[
+f = \langle X_{t\theta},N\rangle = 0,
+\]
+\[
+g = \langle X_{\theta\theta},N\rangle
+  = \frac{ab'}{\sqrt{E}}
+  = \frac{a}{\sqrt{E}}.
+\]
+Plug for $a$, $a''$, $E$:
+\[
+E = \cosh^2(t/w),\quad \sqrt{E} = \cosh(t/w),\quad
+a = w\cosh(t/w),\quad a'' = \frac{1}{w}\cosh(t/w).
+\]
+Hence,
+\[
+e = -\frac{a''}{\sqrt{E}}
+  = -\frac{\frac{1}{w}\cosh(t/w)}{\cosh(t/w)}
+  = -\frac{1}{w},
+\]
+\[
+g = \frac{a}{\sqrt{E}}
+  = \frac{w\cosh(t/w)}{\cosh(t/w)}
+  = w.
+\]
+So $e$ and $g$ are constants.
+Since $F=f=0$, the shape operator matrix in the basis $\{X_t,X_\theta\}$ is
+\[
+S = \text{I}^{-1}\text{II}
+  = \begin{pmatrix} E^{-1} & 0\\ 0 & G^{-1}\end{pmatrix}
+    \begin{pmatrix} e & 0\\ 0 & g\end{pmatrix}
+  = \begin{pmatrix}
+      \dfrac{e}{E} & 0\\[4pt]
+      0 & \dfrac{g}{G}
+    \end{pmatrix}.
+\]
+Thus, the principal curvatures are
+\[
+k_1 = \frac{e}{E}
+         = \frac{-1/w}{\cosh^2(t/w)}
+         = -\frac{1}{w\cosh^2(t/w)},
+\]
+\[
+k_2 = \frac{g}{G}
+         = \frac{w}{w^2\cosh^2(t/w)}
+         = \frac{1}{w\cosh^2(t/w)}.
+\]
+Therefore,
+\[
+k_1 + k_2 = 0,
+\]
+so the mean curvature
+\[
+H = \frac{k_1 + k_2}{2} = 0.
+\]
+This implies $M_w$ is a minimal surface for every $w>0$.
+\end{proof}
+
+
 \section*{Problem 4}
 \begin{proof}
-  $\mathbf{(a)}$ Let $T(s,t)=\partial_t \Gamma(s,t)$. Note that 
-  $$
-  \begin{aligned}
-\left.\frac{d}{ds}\right|_{s=0} L(\Gamma_s)
-&=\left.\frac{d}{ds}\right|_{s=0}\sum_{i=1}^{k-1}\int_{a_i}^{a_{i+1}}|T(s,t)|,dt\\
-&=\sum_{i=1}^{k-1}\int_{a_i}^{a_{i+1}}
-\left.\frac{\langle\nabla_{\partial_s}T,T\rangle}{|T|}\right|_{s=0} dt\\
-&\overset{|T|=1\text{ at }s=0}{=}\sum_{i=1}^{k-1}\int_{a_i}^{a_{i+1}}
-\langle\nabla_{\partial_s}T,\dot\gamma\rangle,dt .
-\end{aligned}
-  $$
-  Since the Levi-Civita connection is torsion free, we have $\nabla_{\partial_s}T=\nabla_{\partial_t}\partial_s\Gamma.$
-  Thus, with $V(t)=\partial_s\Gamma(0,t)$, we have 
-  $$
-  \left.\frac{d}{ds}\right|_{s=0} L(\Gamma_s)=\sum_{i=1}^{k-1}\int_{a_i}^{a_{i+1}}\langle D_t V,\dot\gamma\rangle,dt .
-  $$
-  By integration by part, 
-  $$
-  \int_{a_i}^{a_{i+1}}\langle D_t V,\dot\gamma\rangle,dt=\big[\langle V,\dot\gamma\rangle\big]_{t=a_i^+}^{t=a_{i+1}^-}
--\int_{a_i}^{a_{i+1}}\langle V, D_t\dot\gamma\rangle,dt .
-  $$
-  Take the sum over all $i$, we have 
-  $$
-  \sum_{i=1}^{k-1}\big[\langle V,\dot\gamma\rangle\big]_{a_i^+}^{a_{i+1}^-}
-= \langle V(b),\dot\gamma(b)\rangle-\langle V(a),\dot\gamma(a)\rangle
--\sum_{i=2}^{k-1}\langle V(a_i),,\Delta_i\dot\gamma\rangle ,
-$$
-since the interior endpoint contributions telescope and leave the jumps of
-$\dot\gamma$ at the break points $a_i$. Therefore, 
-$$
-\left.\frac{d}{ds}\right|_{s=0} L(\Gamma_s)
-= -\int_{a}^{b}\langle V, D_t\dot\gamma\rangle,dt
-+\langle V(b),\dot\gamma(b)\rangle
--\langle V(a),\dot\gamma(a)\rangle
--\sum_{i=1}^{k-1}\langle V(a_i),\Delta_i\dot\gamma\rangle.
-$$
+\textbf{(i)} Fix a point $p\in M$ and write $V=T_pM$ with inner product 
+induced by $g$.
+For $w,x,y,z\in V$, define
+\[
+B(w,x,y,z)
+:= \langle w,y\rangle\langle x,z\rangle
+   -\langle w,z\rangle\langle x,y\rangle .
+\]
+For fixed $y,z$, this is alternating in $(w,x)$, and for fixed $w,x$ it is
+alternating in $(y,z)$.  
+By property of the exterior product in Lee's review, there exists a unique bilinear map
+\[
+\langle\cdot,\cdot\rangle_{\Lambda^2} : \Lambda^2 V \times \Lambda^2 V \to \mathbb{R}
+\]
+such that
+\[
+\langle w\wedge x,\; y\wedge z\rangle_{\Lambda^2}
+= B(w,x,y,z)
+= \langle w,y\rangle\langle x,z\rangle
+ -\langle w,z\rangle\langle x,y\rangle
+\]
+for all $w,x,y,z\in V$.
 
-$\mathbf{(b)}$ 
-Fix any $w\in T_qN$. Take a smooth curve $\eta:(-\delta,\delta)\to N$ with
-$\eta(0)=q$ and $\eta'(0)=w$. For $|s|$ small, join $p$ to $\eta(s)$ by a
-unit--speed minimizing geodesic $\gamma_s$, and define a smooth variation
+We first check that $\langle\cdot,\cdot\rangle_{\Lambda^2}$ is an inner
+product.  
+Let $\{e_1,\dots,e_n\}$ be an orthonormal basis of $V$. Then
 \[
-\Gamma:(-\varepsilon,\varepsilon)\times[0,1]\to M,\qquad
-\Gamma(s,t)=\gamma_s(t).
+\langle e_i\wedge e_j,\; e_k\wedge e_\ell\rangle_{\Lambda^2}
+= \delta_{ik}\delta_{j\ell} - \delta_{i\ell}\delta_{jk}.
 \]
-Let $V(t):=\partial_s\Gamma(0,t)$ be its variation field along $\gamma$.
-Then $V(0)=0$ and $V(1)=\eta'(0)=w\in T_qN$.
+In particular, for $i<j$ and $k<\ell$, this is $1$ if $(i,j)=(k,\ell)$ and $0$
+otherwise.  
+Thus, the family
+\[
+\{e_i\wedge e_j : 1\le i<j\le n\}
+\]
+is an orthonormal basis of $\Lambda^2V$, so
+$\langle\cdot,\cdot\rangle_{\Lambda^2}$ is symmetric and positive definite.
+Hence, it is an inner product on $\Lambda^2V$.
+Then we compute the associated norm on decomposable $2$-vectors
+\[
+|w\wedge x|^2
+= \langle w\wedge x,\,w\wedge x\rangle_{\Lambda^2}
+= \langle w,w\rangle\langle x,x\rangle
+ -\langle w,x\rangle^2
+= |w|^2|x|^2 - \langle w,x\rangle^2.
+\]
+This shows the existence.
 
-Since $q$ realizes the distance from $p$ to $N$, the length function
-$L(\Gamma_s)$ has a minimum at $s=0$, hence
+For uniqueness, suppose $(\cdot,\cdot)'$ is any other fiber metric on
+$\Lambda^2V$ whose associated norm satisfies
 \[
-\left.\frac{d}{ds}\right|_{s=0} L(\Gamma_s)=0.
+|w\wedge x|'^2 = |w|^2|x|^2 - \langle w,x\rangle^2
+\quad\text{for all }w,x\in V.
 \]
-Applying the first variation formula from part (a),
+Let $\{e_1,\dots,e_n\}$ be an orthonormal basis of $V$.
+For $i<j$, we have
 \[
-\left.\frac{d}{ds}\right|_{s=0}L(\Gamma_s)
-= -\int_{0}^{1}\!\langle V, D_t\dot\gamma\rangle\,dt
-   +\langle V(1),\dot\gamma(1)\rangle
-   -\langle V(0),\dot\gamma(0)\rangle .
+|e_i\wedge e_j|'^2
+= |e_i|^2|e_j|^2 - \langle e_i,e_j\rangle^2
+= 1,
 \]
-Because $\gamma$ is a geodesic, $D_t\dot\gamma=0$, and $V(0)=0$, we obtain
+so each $e_i\wedge e_j$ has norm $1$ with respect to $(\cdot,\cdot)'$.
+To see that they are orthogonal, fix distinct $i,k$ and some $j$.
+Take $w=e_i+e_k$ and $x=e_j$. Then
 \[
-0=\langle V(1),\dot\gamma(1)\rangle=\langle w,\dot\gamma(1)\rangle .
+w\wedge x = (e_i+e_k)\wedge e_j
+          = e_i\wedge e_j + e_k\wedge e_j.
 \]
-This holds for every $w\in T_qN$, so $\dot\gamma(1)\perp T_qN$. Therefore any
-minimizing geodesic from $p$ to a nearest point $q\in N$ meets $N$
-orthogonally.
+On one hand, by the given norm formula and orthonormality of $e_i,e_j,e_k$,
+\[
+|w\wedge x|'^2
+= |w|^2|x|^2 - \langle w,x\rangle^2
+= 2\cdot1 - 0 = 2.
+\]
+On the other hand, expanding with the (unknown) inner product,
+\[
+|w\wedge x|'^2
+= |e_i\wedge e_j + e_k\wedge e_j|'^2
+= |e_i\wedge e_j|'^2 + |e_k\wedge e_j|'^2
+  + 2(e_i\wedge e_j,\,e_k\wedge e_j)'.
+\]
+Since each norm is $1$, this is
+\[
+2 = 1+1 + 2(e_i\wedge e_j,\,e_k\wedge e_j)'
+\quad\Longrightarrow\quad
+(e_i\wedge e_j,\,e_k\wedge e_j)' = 0.
+\]
+Similar choices of $w,x$ show that
+$(e_i\wedge e_j,\,e_k\wedge e_\ell)' = 0$ whenever $(i,j)\ne(k,\ell)$ with
+$i<j$, $k<\ell$.  
+Thus, $\{e_i\wedge e_j\}_{i<j}$ is an orthonormal basis for $(\cdot,\cdot)'$ as
+well.
+But on a finite-dimensional vector space, an inner product is uniquely
+determined by declaring a basis to be orthonormal. Hence, $(\cdot,\cdot)'$
+coincides with $\langle\cdot,\cdot\rangle_{\Lambda^2}$.  
+Therefore, the fiber metric constructed above is the unique one whose associated
+norm satisfies
+\[
+|w\wedge x|^2 = |w|^2|x|^2 - \langle w,x\rangle^2.
+\]
+
+\textbf{(ii)} Fix $p\in M$ and write $V=T_pM$.
+Denote by $\mathrm{Rm}_p$ the curvature tensor at $p$:
+\[
+\mathrm{Rm}_p(w,x,y,z) = g_p(R(w,x)y,z).
+\]
+Then it is multilinear and alternating in $(w,x)$ and in $(y,z)$.
+Define first a bilinear form
+\[
+B : \Lambda^2V \times \Lambda^2V \to \mathbb{R}
+\]
+by
+\[
+B(w\wedge x,\; y\wedge z) := -\mathrm{Rm}_p(w,x,y,z),
+\]
+and extend by bilinearity.  
+This is well-defined by the universal property of $\Lambda^2V$, because
+$\mathrm{Rm}_p$ is alternating in both $(w,x)$ and $(y,z)$.
+
+Now $(\Lambda^2V,\langle\cdot,\cdot\rangle_{\Lambda^2})$ is a finite-dimensional
+inner product space. By linear algebra, any bilinear form $B$ on such a space is represented by a
+unique linear operator $R_p : \Lambda^2V\to\Lambda^2V$ via
+\[
+B(\alpha,\beta) = \langle R_p(\alpha),\beta\rangle_{\Lambda^2}
+\qquad\text{for all }\alpha,\beta\in\Lambda^2V.
+\]
+Thus, there exists a unique linear map
+\[
+R_p : \Lambda^2 T_pM \to \Lambda^2 T_pM
+\]
+such that
+\[
+\langle R_p(w\wedge x),\, y\wedge z\rangle_{\Lambda^2}
+= -\mathrm{Rm}_p(w,x,y,z)
+\]
+for all $w,x,y,z\in T_pM$.
+
+These maps $R_p$ vary smoothly with $p$. In a local orthonormal frame
+$\{E_i\}$ of $TM$, the frame $\{E_i\wedge E_j\}$ of $\Lambda^2(TM)$ is
+orthonormal, and we can write
+\[
+R_p(E_i\wedge E_j)
+= \sum_{k<\ell} \bigl(-R_{ij k\ell}(p)\bigr)\,E_k\wedge E_\ell,
+\]
+where $R_{ijk\ell}$ are the components of the curvature tensor; these
+coefficients are smooth functions.  
+Thus, $R$ is a smooth bundle endomorphism
+\[
+\mathcal{R} : \Lambda^2(TM) \to \Lambda^2(TM),
+\]
+called the curvature operator of $g$, and it satisfies
+\[
+\langle \mathcal{R}(w\wedge x),\,y\wedge z\rangle
+= -\mathrm{Rm}(w,x,y,z)
+\]
+for all tangent vectors $w,x,y,z$.
+Also, the uniqueness of $\mathcal{R}$ follows from the fiberwise uniqueness of $R_p$.
 \end{proof}
 
+\section*{Problem 5}
+\begin{proof}
+Write
+\[
+v(t) := \gamma'(t),\qquad a(t):=D_t\gamma'(t)
+\]
+for its velocity and covariant acceleration.  Set
+\[
+T(t) := \frac{v(t)}{|v(t)|},
+\]
+the unit tangent field along $\gamma$.
+Choose an arc-length parameter $s$ for $\gamma$, so that
+\[
+\sigma(s) := \gamma(t(s)), \qquad |\sigma'(s)| \equiv 1.
+\]
+By def, the geodesic curvature of $\gamma$ at $t$ is 
+\[
+k(t) := \bigl|D_s T\bigr|_{s=s(t)} ,
+\]
+where $T=\sigma'$ regarded as a unit tangent field along the
+unit-speed reparametrization.
+We express $D_sT$ in terms of $t$.  Since
+\[
+\frac{ds}{dt} = |v(t)|, \qquad \frac{d}{ds} = \frac{1}{|v|}\,D_t,
+\]
+we obtain
+\[
+D_s T = \frac{1}{|v|}\,D_t T.
+\]
+Now compute $D_tT$.  Using $T = v/|v|$ and the product rule,
+\[
+D_t T
+= D_t\Bigl(\frac{v}{|v|}\Bigr)
+= \frac{1}{|v|}a - \frac{1}{|v|^3}\,\langle a,v\rangle\,v.
+\]
+Define the component of $a$ orthogonal to $v$ by
+\[
+a_\perp := a - \frac{\langle a,v\rangle}{|v|^2}v.
+\]
+Then
+\[
+D_t T = \frac{1}{|v|}a_\perp,
+\qquad
+D_s T = \frac{1}{|v|^2}a_\perp.
+\]
+Hence
+\[
+k(t) = |D_sT| = \frac{|a_\perp|}{|v|^2}.
+\]
+By def of $a_\perp$,
+\[
+|a_\perp|^2
+= |a|^2 - \frac{\langle a,v\rangle^2}{|v|^2}.
+\]
+On the other hand, by Problem~4,
+\[
+|v\wedge a|^2
+= |v|^2|a|^2 - \langle v,a\rangle^2.
+\]
+Combining these,
+\[
+|a_\perp|^2
+= \frac{|v\wedge a|^2}{|v|^2}.
+\]
+Therefore,
+\[
+k(t)^2
+= \frac{|a_\perp|^2}{|v|^4}
+= \frac{|v\wedge a|^2}{|v|^6},
+\]
+and taking square roots gives
+\[
+k(t) = \frac{|\,\gamma'(t)\wedge D_t\gamma'(t)\,|}{|\gamma'(t)|^3}.
+\]
+Here the norm in the numerator is the one induced on $\Lambda^2(TM)$ as in
+Problem~4.
+Now assume $M=\mathbb{R}^3$ with the Euclidean metric.  There is a natural
+identification between $2$--vectors and vectors via the cross product.
+For $u,v\in\mathbb{R}^3$,
+$
+u\times v
+\text{ corresponds to }
+u\wedge v\in\Lambda^2\mathbb{R}^3,
+$
+and this identification is an isometry, so
+\[
+|u\times v| = |u\wedge v|.
+\]
+Thus, for $\gamma:I\to\mathbb{R}^3$,
+\[
+k(t)
+= \frac{|\,\gamma'(t)\wedge \gamma''(t)\,|}{|\gamma'(t)|^3}
+= \frac{|\,\gamma'(t)\times \gamma''(t)\,|}{|\gamma'(t)|^3}.
+\]
+
+\end{proof}
+
+\section*{Problem 6}
+\begin{proof}
+    Fix $p\in M$ and write $V=T_pM\subset\mathbb{R}^{n+1}$.
+For any $X\in V$, consider $N$ as a vector field along $M$ in $\mathbb{R}^{n+1}$.
+Then
+\[
+d\nu_p(X) = D_X N \in T_{\nu(p)}S^n\subset\mathbb{R}^{n+1},
+\]
+where $D$ is the ordinary derivative in $\mathbb{R}^{n+1}$.
+
+Because $|N|^2\equiv1$, we have
+\[
+0 = X\bigl(\langle N,N\rangle\bigr)
+  = 2\langle D_XN, N\rangle,
+\]
+so $D_XN\perp N$.  Since both $T_pM$ and $T_{\nu(p)}S^n$ are the hyperplane
+$\{v\in\mathbb{R}^{n+1} : \langle v,N_p\rangle=0\}$, we have
+$D_XN\in T_pM$ and $D_XN\in T_{\nu(p)}S^n$ simultaneously.
+
+By definition of the shape operator $S$ of $M$ (Lee, §8.2),
+\[
+S_p(X) = -D_XN \in T_pM.
+\]
+Thus, viewing $T_pM$ and $T_{\nu(p)}S^n$ as the same subspace of
+$\mathbb{R}^{n+1}$,
+\[
+\,d\nu_p = -S_p : T_pM\to T_{\nu(p)}S^n.\,
+\]
+
+%------------------------------
+% Step 2: Pullback of volume form
+%------------------------------
+Both $T_pM$ and $T_{\nu(p)}S^n$ are $n$–dimensional oriented inner product
+spaces, with volume forms $(dV_g)_p$ and $(dV_{g_0})_{\nu(p)}$.
+Let $e_1,\dots,e_n$ be an oriented orthonormal basis of $T_pM$.
+Since $N_p$ is the outward unit normal for both $M$ and $S^n$, we may regard
+$e_1,\dots,e_n$ also as an oriented orthonormal basis of $T_{\nu(p)}S^n$
+(the condition that $(N_p,e_1,\dots,e_n)$ is an oriented orthonormal basis of
+$\mathbb{R}^{n+1}$ is the same in both cases).
+
+By definition of the pullback of a top-degree form,
+\[
+(\nu^*dV_{g_0})_p(e_1,\dots,e_n)
+ = (dV_{g_0})_{\nu(p)}\!\bigl(d\nu_p(e_1),\dots,d\nu_p(e_n)\bigr).
+\]
+In an oriented orthonormal basis, a volume form is just the determinant:
+\[
+(dV_{g_0})_{\nu(p)}\bigl(d\nu_p(e_1),\dots,d\nu_p(e_n)\bigr)
+ = \det(d\nu_p)\,(dV_{g_0})_{\nu(p)}(e_1,\dots,e_n).
+\]
+But $(dV_{g_0})_{\nu(p)}(e_1,\dots,e_n)=1$ and
+$(dV_g)_p(e_1,\dots,e_n)=1$, so
+\[
+(\nu^*dV_{g_0})_p(e_1,\dots,e_n)
+ = \det(d\nu_p)
+ = \det(-S_p).
+\]
+
+If $\kappa_1,\dots,\kappa_n$ are the principal curvatures of $M$ at $p$, then
+$S_p$ is diagonalizable in an orthonormal basis with eigenvalues
+$\kappa_1,\dots,\kappa_n$, so
+\[
+\det(S_p) = \kappa_1\cdots\kappa_n =: K(p)
+\]
+is the Gaussian curvature of $M$ at $p$ (product of principal curvatures).
+Hence
+\[
+\det(d\nu_p) = \det(-S_p) = (-1)^n\det(S_p) = (-1)^n K(p).
+\]
+
+Therefore,
+\[
+(\nu^*dV_{g_0})_p(e_1,\dots,e_n)
+ = (-1)^n K(p)
+ = \bigl((-1)^n K\,dV_g\bigr)_p(e_1,\dots,e_n).
+\]
+Since this holds for all oriented orthonormal bases of $T_pM$, we conclude
+\[
+\;\nu^* dV_{g_0} = (-1)^n K\, dV_g.\;
+\]
+
+\end{proof}
 \end{document}
